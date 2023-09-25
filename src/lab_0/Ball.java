@@ -1,3 +1,4 @@
+package lab_0;
 public class Ball {
     public boolean isBouncing;
     private int speed;

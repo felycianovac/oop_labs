@@ -1,3 +1,4 @@
+package lab_0;
 public class Main {
     public static void main(String[] args) {
         Ball obj1 = new Ball(true, 2, "red");

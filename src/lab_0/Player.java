@@ -1,3 +1,4 @@
+package lab_0;
 public class Player {
     private String name;
     private int bounces;
