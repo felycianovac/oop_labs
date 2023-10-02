@@ -8,19 +8,26 @@ public class Student {
     private final String email;
     private Date enrollmentDate;
     private final Date dateOfBirth;
-    private final Boolean graduated;
+    private  Boolean graduated;
 
     public Student(String firstName, String lastName,
                    String email, Date enrollmentDate,
-                   Date dateOfBirth){
+                   Date dateOfBirth, Boolean graduated){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.enrollmentDate = enrollmentDate;
         this.dateOfBirth = dateOfBirth;
-        this.graduated = false;
+        this.graduated = graduated;
     }
 
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     public String getEmail(){
         return email;
@@ -29,6 +36,12 @@ public class Student {
     public Boolean getGraduated() {
         return graduated;
     }
+
+    public void setGraduated(boolean graduated) {
+        this.graduated = graduated;
+    }
+
+
 
 
 

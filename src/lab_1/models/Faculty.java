@@ -65,4 +65,15 @@ public class Faculty {
         return students;
     }
 
+    public boolean containsStudent(String firstName, String lastName) {
+        for (Student student : students) {
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
 }

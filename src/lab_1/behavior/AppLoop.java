@@ -1,24 +1,38 @@
 package lab_1.behavior;
 import lab_1.models.University;
 
-import java.util.List;
 import java.util.Scanner;
 
-public class Menu {
+public class AppLoop {
     private University university = new University();
     private Scanner scanner = new Scanner(System.in);
 
-    public Menu(University university, Scanner scanner){
+    public AppLoop(University university, Scanner scanner){
         this.university = university;
         this.scanner = scanner;
     }
-    public void start(){
+    public void run() {
         System.out.println("WELCOME TO THE STUDENT MANAGEMENT SYSTEM !");
-        while(true){
+        while (true) {
             displayMainMenu();
+            String choice = getUserChoice();
+
+            switch (choice) {
+                case "g":
+                    generalOperationsMenu();
+                    break;
+                case "f":
+                    facultyOperationsMenu();
+                    break;
+                case "q":
+                    quitProgram();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select a valid option.");
+            }
+
         }
     }
-
     private void displayMainMenu() {
         System.out.println("What do you want to do?:");
         System.out.println("g - General operations");
@@ -64,20 +78,20 @@ public class Menu {
                 case "nf":
                     System.out.println("Please enter the input in the format: <faculty name>/<faculty abbreviation>/<field>");
                     String facultyInput = scanner.nextLine();
-                    createFaculty(facultyInput);
+                    university.createFaculty(facultyInput);
                     break;
                 case "ssf":
                     System.out.println("Please enter the student email to search for his faculty");
                     String studentEmail = scanner.nextLine();
-                    searchStudentFaculty(studentEmail);
+                    university.searchStudentFaculty(studentEmail);
                     break;
                 case "uf":
-                    displayUniversityFaculties();
+                    university.displayUniversityFaculties();
                     break;
                 case "df":
                     System.out.println("Please enter the field name to filter faculties");
                     String field = scanner.nextLine();
-                    displayFacultiesByField(field);
+                    university.displayFacultiesByField(field);
                     break;
                 case "b":
                     return; // Return to Main Menu
@@ -97,25 +111,25 @@ public class Menu {
             String choice = getUserChoice();
             switch (choice) {
                 case "cs":
-                    System.out.println("Please enter student details in the format: <firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
+                    System.out.println("Please enter student details in the format: <faculty abbreviation>/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
                     String studentInput = scanner.nextLine();
-                    createAndAssignStudent(studentInput);
+                    university.createAndAssignStudent(studentInput);
                     break;
                 case "gs":
                     System.out.println("Please enter student data in the format <first name>/<last name>/<faculty>");
                     String studentData = scanner.nextLine();
-                    graduateStudent(studentData);
+                    university.graduateStudent(studentData);
                     break;
                 case "des":
-                    displayEnrolledStudents();
+                    university.displayEnrolledStudents();
                     break;
                 case "dg":
-                    displayGraduates();
+                    university.displayGraduates();
                     break;
                 case "bf":
                     System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty>");
                     String studentFaculty = scanner.nextLine();
-                    checkStudentBelongsToFaculty(studentFaculty);
+                    university.checkStudentBelongsToFaculty(studentFaculty);
                     break;
                 case "b":
                     return; // Return to Main Menu
