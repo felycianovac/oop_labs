@@ -5,12 +5,12 @@ import lab_1.models.University;
 import java.util.Scanner;
 
 public class AppLoop {
-    private University university = new University();
-    private Scanner scanner = new Scanner(System.in);
+    private University university;
+    private Scanner scanner;
 
-    public AppLoop(University university, Scanner scanner){
-        this.university = university;
-        this.scanner = scanner;
+    public AppLoop(){
+        this.scanner = new Scanner(System.in);
+        this.university = new University(scanner);
     }
     public void run() {
 
@@ -26,6 +26,7 @@ public class AppLoop {
                 case "f":
                     facultyOperationsMenu();
                     break;
+
                 case "q":
                     quitProgram();
                     break;
@@ -40,6 +41,8 @@ public class AppLoop {
                 What do you want to do?
                 g - General operations
                 f - Faculty operations
+                
+                q - Quit program
                 """);
     }
 
@@ -84,10 +87,7 @@ public class AppLoop {
             String choice = getUserChoice();
             switch (choice) {
                 case "nf":
-                    // TODO move to its own method
-                    System.out.println("Please enter the input in the format: <faculty name>/<faculty abbreviation>/<field>");
-                    String facultyInput = scanner.nextLine();
-                    university.createFaculty(facultyInput);
+                    university.createFaculty();
                     break;
                 case "ssf":
                     handleSearchStudent();
@@ -96,12 +96,10 @@ public class AppLoop {
                     university.displayUniversityFaculties();
                     break;
                 case "df":
-                    System.out.println("Please enter the field name to filter faculties");
-                    String field = scanner.nextLine();
-                    university.displayFacultiesByField(field);
+                    university.displayFacultiesByField();
                     break;
                 case "b":
-                    return; // Return to Main Menu
+                    return;
                 case "q":
                     quitProgram();
                     break;
@@ -127,25 +125,19 @@ public class AppLoop {
             String choice = getUserChoice();
             switch (choice) {
                 case "cs":
-                    System.out.println("Please enter student details in the format: <faculty abbreviation>/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
-                    String studentInput = scanner.nextLine();
-                    university.createAndAssignStudent(studentInput);
+                    university.createAndAssignStudent();
                     break;
                 case "gs":
-                    System.out.println("Please enter student data in the format <first name>/<last name>/<faculty>");
-                    String studentData = scanner.nextLine();
-                    university.graduateStudent(studentData);
+                    university.graduateStudent();
                     break;
                 case "des":
-                    university.displayEnrolledStudents();
+                    university.displayStudents(false);
                     break;
                 case "dg":
-                    university.displayGraduates();
+                    university.displayStudents(true);
                     break;
                 case "bf":
-                    System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty abbreviation>");
-                    String studentFaculty = scanner.nextLine();
-                    university.checkStudentBelongsToFaculty(studentFaculty);
+                    university.checkStudentBelongsToFaculty();
                     break;
                 case "b":
                     return; // Return to Main Menu

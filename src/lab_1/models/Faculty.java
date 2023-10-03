@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Faculty {
-    private String name;
-    private String abbreviation;
+    private  String name;
+    private  String abbreviation;
     private List<Student> students;
-    private StudyField studyField;
+    private  StudyField studyField;
 
     public Faculty(String name, String abbreviation, List<Student> students, StudyField studyField){
         this.name = name;
@@ -30,37 +30,9 @@ public class Faculty {
         return abbreviation;
     }
 
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
-    }
 
     public StudyField getStudyField() {
         return studyField;
-    }
-
-    public void setStudyField(StudyField studyField) {
-        this.studyField = studyField;
-    }
-
-    public List<Student> getCurrentStudents() {
-        List<Student> currentStudents = new ArrayList<>();
-        for(Student student : students){
-            if(!student.getGraduated()){
-                currentStudents.add(student);
-            }
-        }
-        return currentStudents;
-    }
-
-
-    public List<Student> getGraduates(){
-        List<Student> graduates = new ArrayList<>();
-        for(Student student : students){
-            if(student.getGraduated()){
-                graduates.add(student);
-            }
-        }
-        return graduates;
     }
 
     public List<Student> getStudents() {
@@ -77,5 +49,13 @@ public class Faculty {
     }
 
 
-
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "name='" + name + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
+                ", students=" + students +
+                ", studyField=" + studyField +
+                '}';
+    }
 }

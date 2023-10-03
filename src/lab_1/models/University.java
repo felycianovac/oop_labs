@@ -7,38 +7,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class University {
     private List<Faculty> faculties;
+    private Scanner scanner;
 
-    public University() {
+    public University(Scanner scanner) {
         faculties = new ArrayList<>();
+        this.scanner = scanner;
     }
-
-
 
     private String[] parseInput(String input) {
         return input.split("/");
     }
+
+    public Faculty findFacultyByCriteria(Predicate<Faculty> criteria){
+        return faculties.stream().filter(criteria).findFirst().orElse(null);
+    }
     public Faculty findFacultyByName(String facultyName) {
-        for (Faculty faculty : faculties) {
-            if (faculty.getName().equals(facultyName)) {
-                return faculty;
-            }
-        }
-        return null; // Faculty not found
+        return findFacultyByCriteria(faculty -> faculty.getName().equals(facultyName));
     }
 
     public Faculty findFacultyByAbbreviation(String facultyAbbreviation) {
-        for (Faculty faculty : faculties) {
-            if (faculty.getAbbreviation().equals(facultyAbbreviation)) {
-                return faculty;
-            }
-        }
-        return null; // Faculty not found
+        return findFacultyByCriteria((faculty -> faculty.getAbbreviation().equals(facultyAbbreviation)));
     }
 
-    public void createFaculty(String facultyInput) {
+    public void createFaculty() {
+        System.out.println("Please enter the input in the format: <faculty name>/<faculty abbreviation>/<field>");
+        String facultyInput = scanner.nextLine();
         String[] facultyDetails = parseInput(facultyInput);
         String facultyName = facultyDetails[0];
         String facultyAbbreviation = facultyDetails[1];
@@ -47,7 +45,6 @@ public class University {
         try {
             StudyField studyField = StudyField.valueOf(field.toUpperCase());
 
-            // Create a new Faculty instance and add it to the faculties list
             Faculty newFaculty = new Faculty(facultyName, facultyAbbreviation, new ArrayList<>(), studyField);
             faculties.add(newFaculty);
             System.out.println("Faculty created successfully!");
@@ -85,37 +82,36 @@ public class University {
             }
         }
     }
-    public List<Faculty> getFacultiesByField(StudyField field) {
-        List<Faculty> matchingFaculties = new ArrayList<>();
+    public void displayFacultiesByField() {
+        System.out.println("Please enter the field name to filter faculties");
+        String fieldInput = scanner.nextLine();
+        StudyField field = StudyField.valueOf(fieldInput.toUpperCase());
+
+        System.out.println("Faculties in the " + field + " field:");
+
+        boolean foundMatchingFaculties = false;
 
         for (Faculty faculty : faculties) {
             if (faculty.getStudyField() == field) {
-                matchingFaculties.add(faculty);
-            }
-        }
-
-        return matchingFaculties;
-    }
-
-    public void displayFacultiesByField(String fieldInput) {
-        StudyField field = StudyField.valueOf(fieldInput.toUpperCase());
-
-        List<Faculty> facultiesByField = getFacultiesByField(field);
-
-        if (facultiesByField.isEmpty()) {
-            System.out.println("No faculties found for the field: " + fieldInput);
-        } else {
-            System.out.println("Faculties in the " + field + " field:");
-            for (Faculty faculty : facultiesByField) {
+                foundMatchingFaculties = true;
                 System.out.println(faculty.getName() + " (" + faculty.getAbbreviation() + ")");
             }
         }
+
+        if (!foundMatchingFaculties) {
+            System.out.println("No faculties found for the field: " + fieldInput);
+        }
     }
-    public void createAndAssignStudent(String studentInput) {
+
+    public void createAndAssignStudent() {
+        System.out.println("Please enter student details in the format: <faculty abbreviation>" +
+                "/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
+        String studentInput = scanner.nextLine();
         String[] studentDetails = parseInput(studentInput);
 
         if (studentDetails.length != 6) {
-            System.out.println("Invalid input format. Please use the format: <faculty abbreviation>/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
+            System.out.println("Invalid input format. Please use the format: " +
+                    "<faculty abbreviation>/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
             return;
         }
 
@@ -151,7 +147,9 @@ public class University {
         System.out.println("Faculty with abbreviation " + facultyAbbreviation + " not found.");
     }
 
-    public void graduateStudent(String studentData) {
+    public void graduateStudent() {
+        System.out.println("Please enter student data in the format <first name>/<last name>/<faculty>");
+        String studentData = scanner.nextLine();
         String[] studentDetails = parseInput(studentData);
         if (studentDetails.length != 3) {
             System.out.println("Invalid input format. Please use <first name>/<last name>/<faculty>.");
@@ -183,35 +181,37 @@ public class University {
 
         System.out.println("Student " + firstName + " " + lastName + " not found in " + facultyName + ".");
     }
-    public void displayEnrolledStudents() {
-        System.out.println("Enrolled Students:");
+    public void displayStudents(boolean check) {
+        if (faculties.isEmpty()) {
+            System.out.println("No faculties found.");
+            return;
+        }
+
+        boolean foundGraduates = false;
+
         for (Faculty faculty : faculties) {
-            List<Student> currentStudents = faculty.getCurrentStudents();
-            if (!currentStudents.isEmpty()) {
-                System.out.println("Faculty: " + faculty.getName());
-                for (Student student : currentStudents) {
+            for (Student student : faculty.getStudents()) {
+                if (!check && !student.getGraduated()) {
+                    System.out.println("Faculty: " + faculty.getName());
+                    System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
+                } else if (check && student.getGraduated()) {
+                    foundGraduates = true;
+                    System.out.println("Faculty: " + faculty.getName());
                     System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
                 }
             }
         }
-    }
-    public void displayGraduates() {
-        List<Student> graduates = new ArrayList<>();
-        for (Faculty faculty : faculties) {
-            List<Student> facultyGraduates = faculty.getGraduates();
-            graduates.addAll(facultyGraduates);
-        }
 
-        if (graduates.isEmpty()) {
+        if (!foundGraduates && check) {
             System.out.println("No graduates found.");
-        } else {
-            System.out.println("Graduates:");
-            for (Student graduate : graduates) {
-                System.out.println(graduate.getFirstName() + " " + graduate.getLastName());
-            }
         }
     }
-    public void checkStudentBelongsToFaculty(String studentData) {
+
+
+
+    public void checkStudentBelongsToFaculty() {
+        System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty abbreviation>");
+        String studentData = scanner.nextLine();
         String[] studentDetails = parseInput(studentData);
 
         if (studentDetails.length != 3) {

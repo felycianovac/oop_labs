@@ -6,7 +6,7 @@ public class Student {
     private final String firstName;
     private final String lastName;
     private final String email;
-    private Date enrollmentDate;
+    private final Date enrollmentDate;
     private final Date dateOfBirth;
     private  Boolean graduated;
 
