@@ -41,8 +41,4 @@ public class Student {
         this.graduated = graduated;
     }
 
-
-
-
-
 }

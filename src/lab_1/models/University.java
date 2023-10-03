@@ -1,13 +1,14 @@
 package lab_1.models;
 
-import java.io.Serializable;
+import lab_1.enums.StudyField;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class University implements Serializable {
+public class University {
     private List<Faculty> faculties;
 
     public University() {
@@ -61,6 +62,7 @@ public class University implements Serializable {
 
 
     public Faculty searchStudentFaculty(String studentEmail) {
+
         for (Faculty faculty : faculties) {
             for (Student student : faculty.getStudents()) {
                 if (student.getEmail().equalsIgnoreCase(studentEmail)) {

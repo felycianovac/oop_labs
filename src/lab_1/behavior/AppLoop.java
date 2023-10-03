@@ -13,6 +13,7 @@ public class AppLoop {
         this.scanner = scanner;
     }
     public void run() {
+
         System.out.println("WELCOME TO THE STUDENT MANAGEMENT SYSTEM !");
         while (true) {
             displayMainMenu();
@@ -35,34 +36,40 @@ public class AppLoop {
         }
     }
     private void displayMainMenu() {
-        System.out.println("What do you want to do?:");
-        System.out.println("g - General operations");
-        System.out.println("f - Faculty operations");
-        System.out.println("s - Student operations");
+        System.out.println("""
+                What do you want to do?
+                g - General operations
+                f - Faculty operations
+                """);
     }
 
     private void displayGeneralMenu(){
-        System.out.println("----------------------");
-        System.out.println("You are currently in the General menu. What do you want to do next?");
-        System.out.println("nf - Create a new faculty");
-        System.out.println("ssf - Search what a faculty a student belongs to");
-        System.out.println("uf - Display university faculties");
-        System.out.println("df - Diplay all faculties belonging to a specific field");
-        System.out.println("b - Back to main menu");
-        System.out.println("q -Quit program");
+        System.out.println("""
+                -------------------------------------------------------------------
+                You are currently in the General menu. What do you want to do next?
+                nf - Create a new faculty
+                ssf - Search what a faculty a student belongs to
+                uf - Display university faculties
+                df - Diplay all faculties belonging to a specific field
+                
+                b - Back to main menu
+                q -Quit program
+                """);
     }
 
-    private void displayFacultyMenu(){
-        System.out.println("----------------------");
-        System.out.println("You are currently in the Faculty menu. What do you want to do next?");
-        System.out.println("cs - Create and assign student to a faculty");
-        System.out.println("gs - Graduate student from a faculty");
-        System.out.println("des - Display current enrolled students");
-        System.out.println("dg - Display graduates");
-        System.out.println("bf - Tell if a student belongs to a faculty");
-        System.out.println("");
-        System.out.println("b - Back to main menu");
-        System.out.println("q -Quit program");
+    private void displayFacultyMenu() {
+
+        System.out.println("""
+                You are currently in the Faculty menu. What do you want to do next?
+                cs - Create and assign student to a faculty
+                gs - Graduate student from a faculty
+                des - Display current enrolled students
+                dg - Display graduates
+                bf - Tell if a student belongs to a faculty
+                                
+                b - Back to main menu
+                q -Quit program
+                """);
     }
 
     private String getUserChoice() {
@@ -77,17 +84,13 @@ public class AppLoop {
             String choice = getUserChoice();
             switch (choice) {
                 case "nf":
+                    // TODO move to its own method
                     System.out.println("Please enter the input in the format: <faculty name>/<faculty abbreviation>/<field>");
                     String facultyInput = scanner.nextLine();
                     university.createFaculty(facultyInput);
                     break;
                 case "ssf":
-                    System.out.println("Please enter the student email to search for his faculty");
-                    String studentEmail = scanner.nextLine();
-                    Faculty faculty = university.searchStudentFaculty(studentEmail);
-                    if(faculty !=null){
-                        System.out.println("Faculty " + faculty.getName());
-                    } else {System.out.println("Faculty not found for student with the email: " + studentEmail);}
+                    handleSearchStudent();
                     break;
                 case "uf":
                     university.displayUniversityFaculties();
@@ -106,6 +109,15 @@ public class AppLoop {
                     System.out.println("Invalid choice. Please select a valid option.");
             }
         }
+    }
+
+    private void handleSearchStudent() {
+        System.out.println("Please enter the student email to search for his faculty");
+        String studentEmail = scanner.nextLine();
+        Faculty faculty = university.searchStudentFaculty(studentEmail);
+        if(faculty != null){
+            System.out.println("Faculty " + faculty.getName());
+        } else {System.out.println("Faculty not found for student with the email: " + studentEmail);}
     }
 
     private void facultyOperationsMenu() {

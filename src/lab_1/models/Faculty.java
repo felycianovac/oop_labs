@@ -1,5 +1,7 @@
 package lab_1.models;
 
+import lab_1.enums.StudyField;
+
 import java.util.ArrayList;
 import java.util.List;
 
