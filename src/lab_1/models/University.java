@@ -1,17 +1,20 @@
 package lab_1.models;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class University {
+public class University implements Serializable {
     private List<Faculty> faculties;
 
     public University() {
         faculties = new ArrayList<>();
     }
+
+
 
     private String[] parseInput(String input) {
         return input.split("/");
@@ -57,18 +60,18 @@ public class University {
     }
 
 
-    public Student searchStudentFaculty(String studentEmail) {
-        // Iterate through all faculties and their students to find the student with the given email
+    public Faculty searchStudentFaculty(String studentEmail) {
         for (Faculty faculty : faculties) {
             for (Student student : faculty.getStudents()) {
                 if (student.getEmail().equalsIgnoreCase(studentEmail)) {
-                    return student; // Return the student if found
+                    return faculty;
                 }
             }
         }
-
-        return null; // Return null if the student is not found
+        System.out.println("Person with email " + studentEmail + " not found");
+        return null;
     }
+
 
     public void displayUniversityFaculties() {
         if (faculties.isEmpty()) {
@@ -93,7 +96,7 @@ public class University {
     }
 
     public void displayFacultiesByField(String fieldInput) {
-        StudyField field = StudyField.valueOf(fieldInput.toUpperCase()); // Convert the input to an enum value
+        StudyField field = StudyField.valueOf(fieldInput.toUpperCase());
 
         List<Faculty> facultiesByField = getFacultiesByField(field);
 
@@ -135,7 +138,6 @@ public class University {
 
         Student newStudent = new Student(firstName, lastName, email, enrollmentDate, dateOfBirth, false);
 
-        // Iterate through faculties to find the matching faculty by abbreviation
         for (Faculty faculty : faculties) {
             if (faculty.getAbbreviation().equals(facultyAbbreviation)) {
                 faculty.getStudents().add(newStudent);
@@ -144,7 +146,6 @@ public class University {
             }
         }
 
-        // If no matching faculty is found
         System.out.println("Faculty with abbreviation " + facultyAbbreviation + " not found.");
     }
 
@@ -159,14 +160,12 @@ public class University {
         String lastName = studentDetails[1];
         String facultyName = studentDetails[2];
 
-        // Find the faculty by name
         Faculty faculty = findFacultyByName(facultyName);
         if (faculty == null) {
             System.out.println("Faculty with name " + facultyName + " not found.");
             return;
         }
 
-        // Find the student in the faculty by first name and last name
         List<Student> students = faculty.getStudents();
         for (Student student : students) {
             if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
@@ -180,7 +179,6 @@ public class University {
             }
         }
 
-        // If the student is not found in the faculty
         System.out.println("Student " + firstName + " " + lastName + " not found in " + facultyName + ".");
     }
     public void displayEnrolledStudents() {

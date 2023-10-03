@@ -1,4 +1,5 @@
 package lab_1.behavior;
+import lab_1.models.Faculty;
 import lab_1.models.University;
 
 import java.util.Scanner;
@@ -66,7 +67,7 @@ public class AppLoop {
 
     private String getUserChoice() {
         System.out.print("Enter your choice: ");
-        return scanner.nextLine().trim().toLowerCase(); // Convert to lowercase for case-insensitive comparison
+        return scanner.nextLine().trim().toLowerCase();
     }
 
     private void generalOperationsMenu() {
@@ -83,7 +84,10 @@ public class AppLoop {
                 case "ssf":
                     System.out.println("Please enter the student email to search for his faculty");
                     String studentEmail = scanner.nextLine();
-                    university.searchStudentFaculty(studentEmail);
+                    Faculty faculty = university.searchStudentFaculty(studentEmail);
+                    if(faculty !=null){
+                        System.out.println("Faculty " + faculty.getName());
+                    } else {System.out.println("Faculty not found for student with the email: " + studentEmail);}
                     break;
                 case "uf":
                     university.displayUniversityFaculties();
@@ -127,7 +131,7 @@ public class AppLoop {
                     university.displayGraduates();
                     break;
                 case "bf":
-                    System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty>");
+                    System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty abbreviation>");
                     String studentFaculty = scanner.nextLine();
                     university.checkStudentBelongsToFaculty(studentFaculty);
                     break;
