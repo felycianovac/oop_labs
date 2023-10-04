@@ -2,6 +2,7 @@ package lab_1.models;
 
 import lab_1.enums.StudyField;
 import lab_1.util.FileManager;
+import lab_1.util.Logger;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,9 +23,6 @@ public class University {
             faculties.addAll(savedFaculties);
         }
     }
-
-
-
 
     private String[] parseInput(String input) {
         return input.split("/");
@@ -54,11 +52,14 @@ public class University {
 
             Faculty newFaculty = new Faculty(facultyName, facultyAbbreviation, new ArrayList<>(), studyField);
             faculties.add(newFaculty);
+            Logger.logFacultyCreation(newFaculty);
+
             System.out.println("Faculty created successfully!");
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid study field: " + field);
         }
         saveUniversityState();
+
     }
 
     public List<Faculty> getAllFaculties() {
@@ -152,6 +153,7 @@ public class University {
         for (Faculty faculty : faculties) {
             if (faculty.getAbbreviation().equals(facultyAbbreviation)) {
                 faculty.getStudents().add(newStudent);
+                Logger.logStudentCreation(newStudent,faculty);
                 System.out.println("Student created and assigned to the faculty: " + faculty.getName());
                 saveUniversityState();
                 return;
@@ -186,6 +188,7 @@ public class University {
             if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
                 if (student.getGraduated() == false) {
                     student.setGraduated(true);
+                    Logger.logStudentGraduation(student);
                     System.out.println("Student " + firstName + " " + lastName + " in " + facultyName + " has been graduated.");
                 } else if(student.getGraduated() == true){
                     System.out.println("Student " + firstName + " " + lastName + " in " + facultyName + " is already graduated.");

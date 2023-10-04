@@ -3,3 +3,4 @@ Student: Felicia,Novac,felicia.novac@isa.utm.md,2022-09-01,2003-10-26,true
 Student: Ana,Lungu,ana.lungu@isa.utm.md,2020-09-01,2001-05-13,true
 Faculty: Veterinary,Vet,VETERINARY_MEDICINE
 Faculty: Architecture,arch,URBANISM_ARCHITECTURE
+Faculty: Alimentara,alim,FOOD_TECHNOLOGY
