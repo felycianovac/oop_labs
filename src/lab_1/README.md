@@ -18,12 +18,11 @@ within the university.
 - Display current enroleld students (ignores the graduates).
 - Display graduates (ignores currently enrolled students).
 - Check if a student belongs to a faculty.
+#### - Student operations
+- Perform batch enrollment for students via a text file.
+- Perform batch graduation for students via a text file.
 #### - Data Management
 - Save and load program state, preserving faculties and students.
-#### - Batch Operations
-
-- Enroll students in batches via a text file.
-- Graduate students in batches via a text file.
 #### - Error Handling
 
 - Validate inputs with meaningful error messages. 
