@@ -11,8 +11,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class FileManager {
+    private static final Logger logger = Logger.getLogger(FileManager.class.getName());
     private static final String SAVE_FILE_PATH = "D:\\UTM\\3rd semester\\OOP\\OOP Labs\\src\\lab_1\\databases\\database.txt";
 
     public static void saveUniversityState(List<Faculty> faculties) {
@@ -20,11 +22,11 @@ public class FileManager {
             for (Faculty faculty : faculties) {
                 writer.write("Faculty: " + faculty.getName() + "," + faculty.getAbbreviation() + "," + faculty.getStudyField());
                 writer.newLine();
-                //Save student data for each faculty
                 for (Student student : faculty.getStudents()) {
-                    writer.write("Student: " + student.getFirstName() + "," + student.getLastName() + ", "
-                            + student.getEmail() + ", " + new SimpleDateFormat("yyyy-MM-dd").format(student.getEnrollmentDate()) + ","
-                            + new SimpleDateFormat("yyyy-MM-dd").format(student.getDateOfBirth()) + ","
+                    writer.write("Student: ");
+                    writer.write(student.getFirstName() + "," + student.getLastName() + ","
+                            + student.getEmail() + "," + new SimpleDateFormat("yyyy-MM-dd").format(student.getEnrollmentDate())
+                            + "," + new SimpleDateFormat("yyyy-MM-dd").format(student.getDateOfBirth()) + ","
                             + student.getGraduated());
                     writer.newLine();
                 }
@@ -40,7 +42,6 @@ public class FileManager {
             String line;
             Faculty currentFaculty = null;
             while ((line = reader.readLine()) != null) {
-                System.out.println("Reading line: " + line); // Debug statement
 
                 if (line.startsWith("Faculty:")) {
                     String[] parts = line.split(",");
@@ -52,12 +53,11 @@ public class FileManager {
                         currentFaculty = new Faculty(facultyName, facultyAbbreviation, new ArrayList<>(), studyField);
                         faculties.add(currentFaculty);
                     }
-                } else if (line.startsWith("Student:") && currentFaculty != null) {
+                } else if (line.startsWith("Student: ") && currentFaculty != null) {
                     String[] parts = line.split(",");
                     if (parts.length >= 6) {
-                        String[] studentInfo = parts[0].substring("Student:".length()).trim().split(" ");
-                        String firstName = studentInfo[0].trim();
-                        String lastName = studentInfo[1].trim();
+                        String firstName = parts[0].substring("Student:".length()).trim();
+                        String lastName = parts[1].trim();
                         String email = parts[2].trim();
                         Date enrollmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[3].trim());
                         Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4].trim());

@@ -165,6 +165,7 @@ public class University {
         System.out.println("Please enter student data in the format <first name>/<last name>/<faculty>");
         String studentData = scanner.nextLine();
         String[] studentDetails = parseInput(studentData);
+
         if (studentDetails.length != 3) {
             System.out.println("Invalid input format. Please use <first name>/<last name>/<faculty>.");
             return;
@@ -183,45 +184,38 @@ public class University {
         List<Student> students = faculty.getStudents();
         for (Student student : students) {
             if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
-                if (!student.getGraduated()) {
+                if (student.getGraduated() == false) {
                     student.setGraduated(true);
                     System.out.println("Student " + firstName + " " + lastName + " in " + facultyName + " has been graduated.");
-                } else {
+                } else if(student.getGraduated() == true){
                     System.out.println("Student " + firstName + " " + lastName + " in " + facultyName + " is already graduated.");
-                }
-                return;
+                } else{System.out.println("Student " + firstName + " " + lastName + " not found in " + facultyName + ".");}
+                break;
             }
         }
-
-        System.out.println("Student " + firstName + " " + lastName + " not found in " + facultyName + ".");
         saveUniversityState();
     }
     public void displayStudents(boolean check) {
-        if (faculties.isEmpty()) {
-            System.out.println("No faculties found.");
-            return;
-        }
-
-        boolean foundGraduates = false;
+        boolean foundStudents = false;
 
         for (Faculty faculty : faculties) {
             for (Student student : faculty.getStudents()) {
-                if (!check && !student.getGraduated()) {
+                if ((!check && !student.getGraduated()) || (check && student.getGraduated())) {
+                    foundStudents = true;
                     System.out.println("Faculty: " + faculty.getName());
                     System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
-                } else if (check && student.getGraduated()) {
-                    foundGraduates = true;
-                    System.out.println("Faculty: " + faculty.getName());
-                    System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
-                } else {System.out.println("No graduates found");}
+                }
             }
         }
 
-        if (!foundGraduates && check) {
-            System.out.println("No graduates found.");
+        if (!foundStudents) {
+            if (check) {
+                System.out.println("No graduates found.");
+            } else {
+                System.out.println("No current enrolled students found.");
+            }
         }
     }
-
 
 
     public void checkStudentBelongsToFaculty() {
