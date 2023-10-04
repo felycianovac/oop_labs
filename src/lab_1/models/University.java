@@ -1,6 +1,7 @@
 package lab_1.models;
 
 import lab_1.enums.StudyField;
+import lab_1.util.FileManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,12 +13,18 @@ import java.util.function.Predicate;
 
 public class University {
     private List<Faculty> faculties;
-    private Scanner scanner;
+    private Scanner scanner = new Scanner(System.in);
 
-    public University(Scanner scanner) {
+    public University() {
         faculties = new ArrayList<>();
-        this.scanner = scanner;
+        List<Faculty> savedFaculties = FileManager.loadUniversityState();
+        if (savedFaculties != null) {
+            faculties.addAll(savedFaculties);
+        }
     }
+
+
+
 
     private String[] parseInput(String input) {
         return input.split("/");
@@ -51,6 +58,7 @@ public class University {
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid study field: " + field);
         }
+        saveUniversityState();
     }
 
     public List<Faculty> getAllFaculties() {
@@ -58,18 +66,23 @@ public class University {
     }
 
 
-    public Faculty searchStudentFaculty(String studentEmail) {
+    public Faculty searchStudentFaculty() {
+        System.out.println("Please enter the student email to search for his faculty");
+        String studentEmail = scanner.nextLine();
 
         for (Faculty faculty : faculties) {
             for (Student student : faculty.getStudents()) {
                 if (student.getEmail().equalsIgnoreCase(studentEmail)) {
+                    System.out.println("Faculty " + faculty.getName());
                     return faculty;
                 }
             }
         }
-        System.out.println("Person with email " + studentEmail + " not found");
+
+        System.out.println("Faculty not found for student with the email: " + studentEmail);
         return null;
     }
+
 
 
     public void displayUniversityFaculties() {
@@ -140,6 +153,7 @@ public class University {
             if (faculty.getAbbreviation().equals(facultyAbbreviation)) {
                 faculty.getStudents().add(newStudent);
                 System.out.println("Student created and assigned to the faculty: " + faculty.getName());
+                saveUniversityState();
                 return;
             }
         }
@@ -180,6 +194,7 @@ public class University {
         }
 
         System.out.println("Student " + firstName + " " + lastName + " not found in " + facultyName + ".");
+        saveUniversityState();
     }
     public void displayStudents(boolean check) {
         if (faculties.isEmpty()) {
@@ -198,7 +213,7 @@ public class University {
                     foundGraduates = true;
                     System.out.println("Faculty: " + faculty.getName());
                     System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
-                }
+                } else {System.out.println("No graduates found");}
             }
         }
 
@@ -235,5 +250,10 @@ public class University {
             }
         }
     }
+
+    public void saveUniversityState() {
+        FileManager.saveUniversityState(getAllFaculties());
+    }
+
 }
 

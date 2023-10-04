@@ -10,7 +10,7 @@ public class AppLoop {
 
     public AppLoop(){
         this.scanner = new Scanner(System.in);
-        this.university = new University(scanner);
+        this.university = new University();
     }
     public void run() {
 
@@ -26,7 +26,6 @@ public class AppLoop {
                 case "f":
                     facultyOperationsMenu();
                     break;
-
                 case "q":
                     quitProgram();
                     break;
@@ -90,7 +89,7 @@ public class AppLoop {
                     university.createFaculty();
                     break;
                 case "ssf":
-                    handleSearchStudent();
+                    university.searchStudentFaculty();
                     break;
                 case "uf":
                     university.displayUniversityFaculties();
@@ -109,14 +108,6 @@ public class AppLoop {
         }
     }
 
-    private void handleSearchStudent() {
-        System.out.println("Please enter the student email to search for his faculty");
-        String studentEmail = scanner.nextLine();
-        Faculty faculty = university.searchStudentFaculty(studentEmail);
-        if(faculty != null){
-            System.out.println("Faculty " + faculty.getName());
-        } else {System.out.println("Faculty not found for student with the email: " + studentEmail);}
-    }
 
     private void facultyOperationsMenu() {
         while (true) {

@@ -41,4 +41,11 @@ public class Student {
         this.graduated = graduated;
     }
 
+    public Date getEnrollmentDate() {
+        return enrollmentDate;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 }
