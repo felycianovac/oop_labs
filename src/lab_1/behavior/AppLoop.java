@@ -1,16 +1,19 @@
 package lab_1.behavior;
 import lab_1.models.Faculty;
 import lab_1.models.University;
+import lab_1.util.BatchOperations;
 
 import java.util.Scanner;
 
 public class AppLoop {
     private University university;
+    private BatchOperations batchOperations;
     private Scanner scanner;
 
     public AppLoop(){
         this.scanner = new Scanner(System.in);
         this.university = new University();
+        this.batchOperations = new BatchOperations(university);
     }
     public void run() {
 
@@ -26,6 +29,8 @@ public class AppLoop {
                 case "f":
                     facultyOperationsMenu();
                     break;
+                case "s":
+                    studentMenu();
                 case "q":
                     quitProgram();
                     break;
@@ -40,6 +45,7 @@ public class AppLoop {
                 What do you want to do?
                 g - General operations
                 f - Faculty operations
+                s - Student operations
                 
                 q - Quit program
                 """);
@@ -74,6 +80,15 @@ public class AppLoop {
                 """);
     }
 
+    private void displayStudentMenu(){
+        System.out.println("""
+                You are currently in the Student menu. What do you want to do next?
+                 be - Perform students' batch enrollment via enrollment_file.txt
+                 bg - Perform students batch graduation via graduation_file.txt
+                 
+                 b - Back to main menu
+                 q - Quit program' """);
+    }
     private String getUserChoice() {
         System.out.print("Enter your choice: ");
         return scanner.nextLine().trim().toLowerCase();
@@ -141,6 +156,28 @@ public class AppLoop {
         }
     }
 
+    private void studentMenu() {
+        while (true) {
+            displayStudentMenu();
+            String choice = getUserChoice();
+            switch (choice){
+                case "be":
+                    batchOperations.performBatchEnrollment();
+                    break;
+                case "bg":
+                    batchOperations.performBatchGraduation();
+                    break;
+                case "b":
+                    return;
+                case "q":
+                    quitProgram();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please select a valid option.");
+
+            }
+        }
+    }
 
     private void quitProgram() {
         System.out.println("Exiting the program. Goodbye!");

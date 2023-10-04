@@ -1,0 +1,4 @@
+2023-10-04 14:44:53 - Faculty created: Alimentara
+2023-10-04 15:13:25 - Student created: Luca Mar and assigned to Veterinary
+2023-10-04 16:35:07 - Student created: Ala Novic and assigned to Computer Science
+2023-10-04 16:36:07 - Student created: Ala Novic and assigned to Computer Science

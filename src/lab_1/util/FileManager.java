@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public class FileManager {
     private static final Logger logger = Logger.getLogger(FileManager.class.getName());
-    private static final String SAVE_FILE_PATH = "D:\\UTM\\3rd semester\\OOP\\OOP Labs\\src\\lab_1\\databases\\database.txt";
+    private static final String SAVE_FILE_PATH = "D:\\UTM\\3rd semester\\OOP\\OOP Labs\\src\\lab_1\\databases\\university.txt";
 
     public static void saveUniversityState(List<Faculty> faculties) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(SAVE_FILE_PATH))) {

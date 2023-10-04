@@ -1,5 +1,8 @@
 Faculty: Computer Science,CS,SOFTWARE_ENGINEERING
 Student: Felicia,Novac,felicia.novac@isa.utm.md,2022-09-01,2003-10-26,true
 Student: Ana,Lungu,ana.lungu@isa.utm.md,2020-09-01,2001-05-13,true
+Student: Ala,Novic,alanovic@gmail.com,2022-02-07,2000-01-01,true
 Faculty: Veterinary,Vet,VETERINARY_MEDICINE
+Student: Luca,Mar,luca.mar@gmail.com,2020-01-01,2001-12-18,false
 Faculty: Architecture,arch,URBANISM_ARCHITECTURE
+Faculty: Alimentara,alim,FOOD_TECHNOLOGY
