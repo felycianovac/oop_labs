@@ -2,3 +2,5 @@
 2023-10-04 15:13:25 - Student created: Luca Mar and assigned to Veterinary
 2023-10-04 16:35:07 - Student created: Ala Novic and assigned to Computer Science
 2023-10-04 16:40:08 - Student graduated: Ala Novic
+2023-10-04 19:46:00 - Student created: Dan Trandafir and assigned to Architecture
+2023-10-04 19:47:40 - Student created: Igor Cuciuc and assigned to Veterinary

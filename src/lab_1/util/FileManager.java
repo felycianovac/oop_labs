@@ -3,11 +3,11 @@ package lab_1.util;
 import lab_1.enums.StudyField;
 import lab_1.models.Faculty;
 import lab_1.models.Student;
+import lab_1.tools.Tools;
 
 
 import java.io.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +25,8 @@ public class FileManager {
                 for (Student student : faculty.getStudents()) {
                     writer.write("Student: ");
                     writer.write(student.getFirstName() + "," + student.getLastName() + ","
-                            + student.getEmail() + "," + new SimpleDateFormat("yyyy-MM-dd").format(student.getEnrollmentDate())
-                            + "," + new SimpleDateFormat("yyyy-MM-dd").format(student.getDateOfBirth()) + ","
+                            + student.getEmail() + "," + Tools.formatDate(student.getEnrollmentDate())
+                            + "," + Tools.formatDate(student.getDateOfBirth()) + ","
                             + student.getGraduated());
                     writer.newLine();
                 }
@@ -59,8 +59,8 @@ public class FileManager {
                         String firstName = parts[0].substring("Student:".length()).trim();
                         String lastName = parts[1].trim();
                         String email = parts[2].trim();
-                        Date enrollmentDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[3].trim());
-                        Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4].trim());
+                        Date enrollmentDate = Tools.parseDate(parts[3].trim());
+                        Date dateOfBirth = Tools.parseDate(parts[4].trim());
                         boolean graduated = Boolean.parseBoolean(parts[5].trim());
 
                         Student student = new Student(firstName, lastName, email, enrollmentDate, dateOfBirth, graduated);

@@ -1,11 +1,11 @@
 package lab_1.models;
 
 import lab_1.enums.StudyField;
+import lab_1.tools.Tools;
 import lab_1.util.FileManager;
 import lab_1.util.Logger;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +24,6 @@ public class University {
         }
     }
 
-    private String[] parseInput(String input) {
-        return input.split("/");
-    }
 
     public Faculty findFacultyByCriteria(Predicate<Faculty> criteria){
         return faculties.stream().filter(criteria).findFirst().orElse(null);
@@ -42,7 +39,7 @@ public class University {
     public void createFaculty() {
         System.out.println("Please enter the input in the format: <faculty name>/<faculty abbreviation>/<field>");
         String facultyInput = scanner.nextLine();
-        String[] facultyDetails = parseInput(facultyInput);
+        String[] facultyDetails = Tools.parseInput(facultyInput);
         String facultyName = facultyDetails[0];
         String facultyAbbreviation = facultyDetails[1];
         String field = facultyDetails[2];
@@ -121,7 +118,7 @@ public class University {
         System.out.println("Please enter student details in the format: <faculty abbreviation>" +
                 "/<firstname>/<lastname>/<email>/<enrollmentDate>/<dateOfBirth>");
         String studentInput = scanner.nextLine();
-        String[] studentDetails = parseInput(studentInput);
+        String[] studentDetails = Tools.parseInput(studentInput);
 
         if (studentDetails.length != 6) {
             System.out.println("Invalid input format. Please use the format: " +
@@ -136,13 +133,12 @@ public class University {
         String enrollmentDateInput = studentDetails[4];
         String dateOfBirthInput = studentDetails[5];
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date enrollmentDate;
         Date dateOfBirth;
 
         try {
-            enrollmentDate = dateFormat.parse(enrollmentDateInput);
-            dateOfBirth = dateFormat.parse(dateOfBirthInput);
+            enrollmentDate = Tools.parseDate(enrollmentDateInput);
+            dateOfBirth = Tools.parseDate(dateOfBirthInput);
         } catch (ParseException e) {
             System.out.println("Invalid date format. Please use the format: yyyy-MM-dd");
             return;
@@ -166,7 +162,7 @@ public class University {
     public void graduateStudent() {
         System.out.println("Please enter student data in the format <first name>/<last name>/<faculty>");
         String studentData = scanner.nextLine();
-        String[] studentDetails = parseInput(studentData);
+        String[] studentDetails = Tools.parseInput(studentData);
 
         if (studentDetails.length != 3) {
             System.out.println("Invalid input format. Please use <first name>/<last name>/<faculty>.");
@@ -224,7 +220,7 @@ public class University {
     public void checkStudentBelongsToFaculty() {
         System.out.println("Please enter the student details in the format <first name>/<last name>/<faculty abbreviation>");
         String studentData = scanner.nextLine();
-        String[] studentDetails = parseInput(studentData);
+        String[] studentDetails = Tools.parseInput(studentData);
 
         if (studentDetails.length != 3) {
             System.out.println("Invalid input format. Please use the format: <first name>/<last name>/<faculty abbreviation>");

@@ -3,12 +3,12 @@ package lab_1.util;
 import lab_1.models.Faculty;
 import lab_1.models.Student;
 import lab_1.models.University;
+import lab_1.tools.Tools;
 
 import java.io.*;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.Scanner;
 
 public class BatchOperations {
     private University university;
@@ -23,7 +23,7 @@ public class BatchOperations {
         try (BufferedReader reader = new BufferedReader(new FileReader(ENROLLMENT_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] studentDetails = line.split("/");
+                String[] studentDetails = Tools.parseInput(line);
                 if (studentDetails.length == 6) {
                     String facultyAbbreviation = studentDetails[0];
                     String firstName = studentDetails[1];
@@ -32,9 +32,17 @@ public class BatchOperations {
                     String enrollmentDateInput = studentDetails[4];
                     String dateOfBirthInput = studentDetails[5];
 
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    Date enrollmentDate = dateFormat.parse(enrollmentDateInput);
-                    Date dateOfBirth = dateFormat.parse(dateOfBirthInput);
+                    Date enrollmentDate;
+                    Date dateOfBirth;
+
+                    try {
+                        enrollmentDate = Tools.parseDate(enrollmentDateInput);
+                        dateOfBirth = Tools.parseDate(dateOfBirthInput);
+                    } catch (ParseException e) {
+                        System.err.println("Error parsing dates: " + e.getMessage());
+                        continue; // Skip this entry if date parsing fails
+                    }
+
 
                     Student newStudent = new Student(firstName, lastName, email, enrollmentDate, dateOfBirth, false);
 
@@ -49,7 +57,7 @@ public class BatchOperations {
             }
             university.saveUniversityState();
             System.out.println("Batch enrollment completed successfully.");
-        } catch (IOException | ParseException e) {
+        } catch (IOException e) {
             System.err.println("Error during batch enrollment: " + e.getMessage());
         }
     }
