@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class AppLoop {
     private Scanner scanner;
+    String filePath ="";
 
     public AppLoop() {
         this.scanner = new Scanner(System.in);
