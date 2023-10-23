@@ -31,6 +31,7 @@ public class AppLoop {
                     break;
                 case "s":
                     studentMenu();
+                    break;
                 case "q":
                     quitProgram();
                     break;

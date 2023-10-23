@@ -195,14 +195,18 @@ public class University {
         saveUniversityState();
     }
     public void displayStudents(boolean check) {
+        System.out.println("Please enter the faculty name of students you want to see:");
+        String facultyName = scanner.nextLine();
+
         boolean foundStudents = false;
 
         for (Faculty faculty : faculties) {
-            for (Student student : faculty.getStudents()) {
-                if ((!check && !student.getGraduated()) || (check && student.getGraduated())) {
-                    foundStudents = true;
-                    System.out.println("Faculty: " + faculty.getName());
-                    System.out.println("Student: " + student.getFirstName() + " " + student.getLastName());
+            if (faculty.getName().equalsIgnoreCase(facultyName)) {
+                for (Student student : faculty.getStudents()) {
+                    if ((!check && !student.getGraduated()) || (check && student.getGraduated())) {
+                        foundStudents = true;
+                        System.out.println(student.getFirstName() + " " + student.getLastName());
+                    }
                 }
             }
         }

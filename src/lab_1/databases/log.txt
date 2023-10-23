@@ -4,3 +4,6 @@
 2023-10-04 16:40:08 - Student graduated: Ala Novic
 2023-10-04 19:46:00 - Student created: Dan Trandafir and assigned to Architecture
 2023-10-04 19:47:40 - Student created: Igor Cuciuc and assigned to Veterinary
+2023-10-09 12:59:38 - Student created: Dima Lalala and assigned to Veterinary
+2023-10-09 13:47:50 - Student created: Ion Doe and assigned to Veterinary
+2023-10-09 15:02:29 - Student graduated: Dima Lalala
