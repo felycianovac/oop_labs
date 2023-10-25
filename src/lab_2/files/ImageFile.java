@@ -1,5 +1,9 @@
 package lab_2.files;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 public class ImageFile extends Document{
@@ -7,37 +11,24 @@ public class ImageFile extends Document{
     private int height;
     private int resolution;
 
-    public ImageFile(String filename, Date creationDate, Date lastModified,
-                     boolean changed, String extension, int width,
-                     int height, int resolution, String filePath) {
-        super(filename, creationDate, lastModified, changed, extension, filePath);
-        this.width = width;
-        this.height = height;
-        this.resolution = resolution;
+    public ImageFile(String filename, Date creationDate, Date lastModified, String filePath) {
+        super(filePath, filename, creationDate, lastModified);
+        extractImageInfo();
+
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getResolution() {
-        return resolution;
-    }
-
-    public void setResolution(int resolution) {
-        this.resolution = resolution;
+    public void extractImageInfo(){
+        File file = new File(filePath+File.separator+filename);
+        try{
+            BufferedImage image = ImageIO.read(file);
+            if(image!=null){
+                width = image.getWidth();
+                height = image.getHeight();
+                resolution = width * height;
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @Override

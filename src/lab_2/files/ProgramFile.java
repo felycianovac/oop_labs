@@ -1,5 +1,9 @@
 package lab_2.files;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Date;
 
 public class ProgramFile extends Document{
@@ -7,25 +11,41 @@ public class ProgramFile extends Document{
     private int classCount;
     private int methodCount;
 
-    public ProgramFile(String filename, Date creationDate, Date lastModified,
-                       boolean changed, String extension, int lineCount,
-                       int classCount, int methodCount, String filePath) {
-        super(filename, creationDate, lastModified, changed, extension, filePath);
-        this.lineCount = lineCount;
-        this.classCount = classCount;
-        this.methodCount = methodCount;
+    public ProgramFile(String filePath, String filename, Date creationDate, Date lastModified) {
+        super(filePath,filename, creationDate, lastModified);
+        extractProgramInfo();
+
     }
 
-    public int getLineCount() {
-        return lineCount;
-    }
+    private void extractProgramInfo() {
+        //TODO: implement the same for .py
+        File file = new File(filePath + File.separator + filename);
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            boolean inCommentBlock = false;
 
-    public int getClassCount() {
-        return classCount;
-    }
+            while ((line = reader.readLine()) != null) {
+                lineCount++;
+                //TODO: improve class count
+                if (!inCommentBlock) {
+                    if (line.trim().contains("class")) {
+                        classCount++;
+                    } else if (line.trim().startsWith("public") || (line.trim().startsWith("private")) && line.contains("(") && line.contains(")")) {
+                        methodCount++;
+                    }
+                }
 
-    public int getMethodCount() {
-        return methodCount;
+                // Check for multi-line comments
+                if (line.contains("/*")) {
+                    inCommentBlock = true;
+                }
+                if (line.contains("*/")) {
+                    inCommentBlock = false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
