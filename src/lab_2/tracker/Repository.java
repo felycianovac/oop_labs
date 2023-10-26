@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Repository {
@@ -14,11 +15,15 @@ public class Repository {
     private List<Document> documents;
     private String DIRECTORY_PATH;
     private DirectoryAnalyzer directoryAnalyzer;
+    private FileChangeDetector fileChangeDetector;
+
+
     public Repository(String filePath, List<Document> documents, SnapshotSys snapshotSys){
         this.documents = documents;
         this.DIRECTORY_PATH = DIRECTORY_PATH;
         this.snapshotSys = snapshotSys;
         this.directoryAnalyzer = new DirectoryAnalyzer(filePath);
+        this.fileChangeDetector = new FileChangeDetector(this);
     }
 
     public void info(String filename) {
@@ -44,6 +49,7 @@ public class Repository {
     }
 
     public void status() {
+        //TODO: implement a method that print the report of the changes (unify with FileChangeDetector.detectChanges())
         snapshotSys.loadSnapshots();
         long lastSnapshotTime = snapshotSys.getLastSnapshotTime();
 
@@ -70,5 +76,9 @@ public class Repository {
                 System.out.println(fileName + " - Deleted");
             }
         }
+    }
+
+    public SnapshotSys getSnapshotSys() {
+        return snapshotSys;
     }
 }

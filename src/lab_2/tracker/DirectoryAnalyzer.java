@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DirectoryAnalyzer {
+    //TODO: Unify with another class
     private String DIRECTORY_PATH;
 
     public DirectoryAnalyzer(String DIRECTORY_PATH){

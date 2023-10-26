@@ -74,10 +74,8 @@ public class SnapshotSys {
             loadCurrentSnapshot();
             currentSnapshot.forEach((fileName, document) -> {
                 writer.printf("%s|%d%n", fileName, document.getLastModified().getTime());
-                System.out.println("Writing to snapshot: " + fileName + "|" + document.getLastModified().getTime());
             });
 
-            System.out.println("Snapshot saved.");
         } catch (IOException e) {
             System.out.println("Failed to save snapshot: " + e.getMessage());
         }

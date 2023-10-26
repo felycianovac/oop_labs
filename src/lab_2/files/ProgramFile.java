@@ -15,7 +15,6 @@ public class ProgramFile extends Document implements Serializable {
     }
 
     private void extractProgramInfo() {
-        //TODO: implement the same for .py
         String extension = getFileExtension(filename);
         File file = new File(DIRECTORY_PATH + File.separator + filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
