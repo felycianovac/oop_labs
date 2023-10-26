@@ -1,23 +1,26 @@
 package lab_2;
 
 import lab_2.files.Document;
-import lab_2.utils.DirectoryAnalyzer;
+import lab_2.tracker.DirectoryAnalyzer;
+import lab_2.tracker.Repository;
+import lab_2.tracker.SnapshotSys;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class AppLoop {
     private List<Document> documents;
-    private Repository vcsRepository;
-    private String folderPath;
+    private Repository repository;
+    private String DIRECTORY_PATH;
     private Scanner scanner;
+    private SnapshotSys snapshotSys;
 
-    public AppLoop(String folderPath) {
-        this.folderPath = folderPath;
+    public AppLoop(String DIRECTORY_PATH, Repository repository) {
+        this.DIRECTORY_PATH = DIRECTORY_PATH;
         this.scanner = new Scanner(System.in);
-        DirectoryAnalyzer directoryAnalyzer = new DirectoryAnalyzer(folderPath);
+        DirectoryAnalyzer directoryAnalyzer = new DirectoryAnalyzer(DIRECTORY_PATH);
         documents = directoryAnalyzer.extractDirectoryFiles();
-        this.vcsRepository = new Repository(folderPath,documents);
+        this.repository = repository;
     }
 
     public void run() {
@@ -26,13 +29,20 @@ public class AppLoop {
             String choice = getUserChoice();
             if(choice.startsWith("info")){
                 String filename = choice.substring(5);
-                vcsRepository.info(filename);
-
-
-
+                repository.info(filename);
+            } else if(choice.equals("commit")){
+                repository.commit();
             }
+            else if(choice.equals("status")){
+                repository.status();
+            }
+            else if(choice.equals("exit")){
+                quitProgram();
+            }
+            else System.out.println("Invalid choice!");
         }
     }
+
 
     public void displayMenu() {
         System.out.print("""

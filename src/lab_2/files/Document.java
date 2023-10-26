@@ -4,15 +4,15 @@ import java.io.File;
 import java.util.Date;
 
 public class Document {
-    protected  String filePath;
+    protected  String DIRECTORY_PATH;
 
     protected String filename;
     protected Date creationDate;
     protected Date lastModified;
 
 
-    public Document(String filePath, String filename,  Date creationDate, Date lastModified) {
-        this.filePath = filePath;
+    public Document(String DIRECTORY_PATH, String filename,  Date creationDate, Date lastModified) {
+        this.DIRECTORY_PATH = DIRECTORY_PATH;
         this.filename = filename;
         this.creationDate = creationDate;
         this.lastModified = lastModified;
@@ -46,6 +46,14 @@ public class Document {
             return filename.substring(index+1);
         }
         return "";
+    }
+
+    public Date getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        this.lastModified = lastModified;
     }
 
     public void info(){

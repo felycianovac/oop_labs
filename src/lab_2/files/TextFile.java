@@ -17,7 +17,7 @@ public class TextFile extends Document {
     }
 
     private void extractTxtInfo(){
-        File file = new File(filePath+File.separator+filename);
+        File file = new File(DIRECTORY_PATH+File.separator+filename);
         try(BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while((line = reader.readLine()) != null){

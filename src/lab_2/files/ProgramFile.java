@@ -1,42 +1,57 @@
 package lab_2.files;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 
-public class ProgramFile extends Document{
+public class ProgramFile extends Document implements Serializable {
     private int lineCount;
     private int classCount;
     private int methodCount;
 
-    public ProgramFile(String filePath, String filename, Date creationDate, Date lastModified) {
-        super(filePath,filename, creationDate, lastModified);
+    public ProgramFile(String DIRECTORY_PATH, String filename, Date creationDate, Date lastModified) {
+        super(DIRECTORY_PATH,filename, creationDate, lastModified);
         extractProgramInfo();
 
     }
 
     private void extractProgramInfo() {
         //TODO: implement the same for .py
-        File file = new File(filePath + File.separator + filename);
+        String extension = getFileExtension(filename);
+        File file = new File(DIRECTORY_PATH + File.separator + filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
+            boolean inSingleLineComment = false;
+            boolean inMultiLineComment = false;
             boolean inCommentBlock = false;
 
             while ((line = reader.readLine()) != null) {
                 lineCount++;
-                //TODO: improve class count
-                if (!inCommentBlock) {
-                    if (line.trim().contains("class")) {
-                        classCount++;
-                    } else if (line.trim().startsWith("public") || (line.trim().startsWith("private")) && line.contains("(") && line.contains(")")) {
-                        methodCount++;
+                if(extension.equals("py")){
+                    if(!inMultiLineComment && !inSingleLineComment) {
+                        if (line.startsWith("class")) {
+                            classCount++;
+                        } else if (line.contains("def")) {
+                            methodCount++;
+                        }
+                    }
+                }
+                else if(extension.equals("java")) {
+                    if(!inCommentBlock) {
+                        if (line.trim().startsWith("public class") || line.trim().startsWith("class")) {
+                            classCount++;
+                        } else if (line.trim().startsWith("public") || (line.trim().startsWith("private")) && line.contains("(") && line.contains(")")) {
+                            methodCount++;
+                        }
                     }
                 }
 
-                // Check for multi-line comments
-                if (line.contains("/*")) {
+                if(line.contains("#")){
+                    inSingleLineComment = true;
+                }
+                if (line.matches("^[\\s]*['\"]{3}.*['\"]{3}.*")) {
+                    inMultiLineComment = !inMultiLineComment;
+                }
+                if (line.contains("/*" )){
                     inCommentBlock = true;
                 }
                 if (line.contains("*/")) {
