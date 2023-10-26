@@ -8,7 +8,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class FileChangeDetector {
-    //TODO: make the scheduler run independently from the main thread
     private final Repository repository;
     private final ScheduledExecutorService scheduler;
     private SnapshotSys snapshotSys;
@@ -25,7 +24,7 @@ public class FileChangeDetector {
     public void start() {
         repository.getSnapshotSys().loadSnapshots();
         repository.getSnapshotSys().setLastKnownSnapshot();
-        scheduler.scheduleAtFixedRate(this::detectChanges, 0, 1, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::detectChanges, 0, 5, TimeUnit.SECONDS);
     }
 
     public void stop() {
@@ -33,6 +32,7 @@ public class FileChangeDetector {
     }
 
     public void detectChanges() {
+        snapshotSys.loadSnapshots();
         Map<String, Document> lastKnownSnapshot = snapshotSys.getLastKnownSnapshot();
         Map<String, Document> currentSnapshot = snapshotSys.getCurrentSnapshot();
 
