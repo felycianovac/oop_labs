@@ -4,6 +4,9 @@ Student: Ana,Lungu,ana.lungu@isa.utm.md,2020-09-01,2001-05-13,true
 Student: Ala,Novic,alanovic@gmail.com,2022-02-07,2000-01-01,true
 Faculty: Veterinary,Vet,VETERINARY_MEDICINE
 Student: Luca,Mar,luca.mar@gmail.com,2020-01-01,2001-12-18,false
+Student: Igor,Cuciuc,manele@gmail.com,2022-09-01,1999-03-03,false
+Student: Dima,Lalala,dimalalala@la.com,2022-09-01,2000-01-01,true
+Student: Ion,Doe,iondoe@gmail.com,2022-09-01,2000-02-02,false
 Faculty: Architecture,arch,URBANISM_ARCHITECTURE
 Student: Dan,Trandafir,danut@gmail.com,2023-09-01,2004-09-25,false
 Faculty: Alimentara,alim,FOOD_TECHNOLOGY
