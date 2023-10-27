@@ -11,14 +11,14 @@ public class ImageFile extends Document{
     private int height;
     private int resolution;
 
-    public ImageFile(String filename, Date creationDate, Date lastModified, String DIRECTORY_PATH) {
-        super(DIRECTORY_PATH, filename, creationDate, lastModified);
+    public ImageFile(String filename, Date creationDate, Date lastModified, String directoryPath) {
+        super(directoryPath, filename, creationDate, lastModified);
         extractImageInfo();
 
     }
 
     public void extractImageInfo(){
-        File file = new File(DIRECTORY_PATH+File.separator+filename);
+        File file = new File(directoryPath+File.separator+filename);
         try{
             BufferedImage image = ImageIO.read(file);
             if(image!=null){

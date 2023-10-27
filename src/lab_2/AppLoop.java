@@ -1,8 +1,8 @@
 package lab_2;
 
 import lab_2.files.Document;
-import lab_2.tracker.DirectoryAnalyzer;
-import lab_2.tracker.FileChangeDetector;
+import lab_2.utils.FileUtils;
+import lab_2.tracker.DetectorScheduler;
 import lab_2.tracker.Repository;
 import lab_2.tracker.SnapshotSys;
 
@@ -12,16 +12,15 @@ import java.util.Scanner;
 public class AppLoop {
     private List<Document> documents;
     private Repository repository;
-    private String DIRECTORY_PATH;
+    private String directoryPath;
     private Scanner scanner;
-    private SnapshotSys snapshotSys;
-    private FileChangeDetector fileChangeDetector;
+    private DetectorScheduler fileChangeDetector;
 
-    public AppLoop(String DIRECTORY_PATH, Repository repository) {
-        this.fileChangeDetector = new FileChangeDetector(repository);
-        this.DIRECTORY_PATH = DIRECTORY_PATH;
+    public AppLoop(String directoryPath, Repository repository) {
+        this.fileChangeDetector = new DetectorScheduler(repository);
+        this.directoryPath = directoryPath;
         this.scanner = new Scanner(System.in);
-        DirectoryAnalyzer directoryAnalyzer = new DirectoryAnalyzer(DIRECTORY_PATH);
+        FileUtils directoryAnalyzer = new FileUtils(directoryPath);
         documents = directoryAnalyzer.extractDirectoryFiles();
         this.repository = repository;
         fileChangeDetector.start();

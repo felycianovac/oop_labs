@@ -11,13 +11,13 @@ public class TextFile extends Document {
     private int characterCount;
     private int wordCount;
 
-    public TextFile(String filePath, String filename, Date creationDate, Date lastModified) {
-        super(filePath, filename, creationDate, lastModified);
+    public TextFile(String directoryPath, String filename, Date creationDate, Date lastModified) {
+        super(directoryPath, filename, creationDate, lastModified);
         extractTxtInfo();
     }
 
     private void extractTxtInfo(){
-        File file = new File(DIRECTORY_PATH+File.separator+filename);
+        File file = new File(directoryPath+File.separator+filename);
         try(BufferedReader reader = new BufferedReader(new FileReader(file))){
             String line;
             while((line = reader.readLine()) != null){

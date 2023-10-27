@@ -1,11 +1,9 @@
 package lab_2;
 
 import lab_2.files.Document;
-import lab_2.tracker.FileChangeDetector;
 import lab_2.tracker.Repository;
 import lab_2.tracker.SnapshotSys;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package lab_2.tracker;
+package lab_2.utils;
 
 import lab_2.files.Document;
 
@@ -6,17 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DirectoryAnalyzer {
-    //TODO: Unify with another class
+public class FileUtils {
     private String DIRECTORY_PATH;
 
-    public DirectoryAnalyzer(String DIRECTORY_PATH){
+    public FileUtils(String DIRECTORY_PATH){
         this.DIRECTORY_PATH = DIRECTORY_PATH;
     }
 

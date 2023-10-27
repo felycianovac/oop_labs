@@ -8,15 +8,15 @@ public class ProgramFile extends Document implements Serializable {
     private int classCount;
     private int methodCount;
 
-    public ProgramFile(String DIRECTORY_PATH, String filename, Date creationDate, Date lastModified) {
-        super(DIRECTORY_PATH,filename, creationDate, lastModified);
+    public ProgramFile(String directoryPath, String filename, Date creationDate, Date lastModified) {
+        super(directoryPath,filename, creationDate, lastModified);
         extractProgramInfo();
 
     }
 
     private void extractProgramInfo() {
         String extension = getFileExtension(filename);
-        File file = new File(DIRECTORY_PATH + File.separator + filename);
+        File file = new File(directoryPath + File.separator + filename);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             boolean inSingleLineComment = false;

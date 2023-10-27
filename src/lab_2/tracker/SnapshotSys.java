@@ -10,17 +10,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SnapshotSys {
-    private String SNAPSHOT_PATH;
-    private String DIRECTORY_PATH;
+    private String snapshotPath;
+    private String directoryPath;
     private Map<String, Document> currentSnapshot;
     private Map<String, Document> previousSnapshot;
     private long lastSnapshotTime;
     private Hashtable<String, Document> lastKnownSnapshot;
 
 
-    public SnapshotSys(String DIRECTORY_PATH, String SNAPSHOT_PATH) {
-        this.DIRECTORY_PATH = DIRECTORY_PATH;
-        this.SNAPSHOT_PATH = SNAPSHOT_PATH;
+    public SnapshotSys(String directoryPath, String snapshotPath) {
+        this.directoryPath = directoryPath;
+        this.snapshotPath = snapshotPath;
         this.currentSnapshot = new HashMap<>();
         this.previousSnapshot = new HashMap<>();
         this.lastSnapshotTime = 0;
@@ -35,7 +35,7 @@ public class SnapshotSys {
 
     private void loadPreviousSnapshot() {
         try {
-            List<String> lines = Files.readAllLines(Paths.get(SNAPSHOT_PATH));
+            List<String> lines = Files.readAllLines(Paths.get(snapshotPath));
             if (!lines.isEmpty()) {
                 lastSnapshotTime = Long.parseLong(lines.remove(0));
             }
@@ -44,7 +44,7 @@ public class SnapshotSys {
                     .filter(parts -> parts.length == 2)
                     .collect(Collectors.toMap(
                             parts -> parts[0],
-                            parts -> new Document(DIRECTORY_PATH, parts[0], null, new Date(Long.parseLong(parts[1]))),
+                            parts -> new Document(directoryPath, parts[0], null, new Date(Long.parseLong(parts[1]))),
                             (document1, document2) -> document1 // In case of duplicate keys, keep the first one
                     ));
         } catch (IOException e) {
@@ -53,13 +53,13 @@ public class SnapshotSys {
     }
 
     private void loadCurrentSnapshot() {
-        File directory = new File(DIRECTORY_PATH);
+        File directory = new File(directoryPath);
         currentSnapshot.clear();
         if (directory.isDirectory()) {
             for (File file : Optional.ofNullable(directory.listFiles()).orElse(new File[0])) {
                 if (file.isFile()) {
                     String fileName = file.getName();
-                    Document document = new Document(DIRECTORY_PATH, fileName, null, new Date(file.lastModified()));
+                    Document document = new Document(directoryPath, fileName, null, new Date(file.lastModified()));
                     currentSnapshot.put(fileName, document);
                 }
             }
@@ -69,7 +69,7 @@ public class SnapshotSys {
 
     public void saveSnapshot() {
 
-        try (PrintWriter writer = new PrintWriter(SNAPSHOT_PATH)) {
+        try (PrintWriter writer = new PrintWriter(snapshotPath)) {
             writer.println(System.currentTimeMillis());
             loadCurrentSnapshot();
             currentSnapshot.forEach((fileName, document) -> {
@@ -101,7 +101,5 @@ public class SnapshotSys {
         return lastSnapshotTime;
     }
 
-    public void setLastSnapshotTime(long lastSnapshotTime) {
-        this.lastSnapshotTime = lastSnapshotTime;
-    }
+
 }

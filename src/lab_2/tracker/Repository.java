@@ -1,29 +1,27 @@
 package lab_2.tracker;
 
 import lab_2.files.Document;
+import lab_2.utils.FileUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Repository {
     private SnapshotSys snapshotSys;
     private List<Document> documents;
-    private String DIRECTORY_PATH;
-    private DirectoryAnalyzer directoryAnalyzer;
-    private FileChangeDetector fileChangeDetector;
+    private String directoryPath;
+    private FileUtils directoryAnalyzer;
+    private DetectorScheduler fileChangeDetector;
 
 
-    public Repository(String filePath, List<Document> documents, SnapshotSys snapshotSys){
+    public Repository(String directoryPath, List<Document> documents, SnapshotSys snapshotSys){
         this.documents = documents;
-        this.DIRECTORY_PATH = DIRECTORY_PATH;
         this.snapshotSys = snapshotSys;
-        this.directoryAnalyzer = new DirectoryAnalyzer(filePath);
-        this.fileChangeDetector = new FileChangeDetector(this);
+        this.directoryAnalyzer = new FileUtils(directoryPath);
+        this.fileChangeDetector = new DetectorScheduler(this);
     }
 
     public void info(String filename) {
@@ -49,7 +47,6 @@ public class Repository {
     }
 
     public void status() {
-        //TODO: implement a method that print the report of the changes (unify with FileChangeDetector.detectChanges())
         snapshotSys.loadSnapshots();
         long lastSnapshotTime = snapshotSys.getLastSnapshotTime();
 
@@ -59,23 +56,22 @@ public class Repository {
         Map<String, Document> currentSnapshot = snapshotSys.getCurrentSnapshot();
         Map<String, Document> previousSnapshot = snapshotSys.getPreviousSnapshot();
 
-        for (Map.Entry<String, Document> entry : currentSnapshot.entrySet()) {
-            String fileName = entry.getKey();
-            Document document = entry.getValue();
-            if (!previousSnapshot.containsKey(fileName)) {
-                System.out.println(fileName + " - New File");
-            } else if (!document.getLastModified().equals(previousSnapshot.get(fileName).getLastModified())) {
-                System.out.println(fileName + " - Changed");
-            } else {
-                System.out.println(fileName + " - Unchanged");
+        ChangeDetector.compareSnapshots(previousSnapshot, currentSnapshot, (filename, changeType) -> {
+            switch (changeType) {
+                case NEW:
+                    System.out.println(filename + " - New File");
+                    break;
+                case MODIFIED:
+                    System.out.println(filename + " - Changed");
+                    break;
+                case DELETED:
+                    System.out.println(filename + " - Deleted");
+                    break;
+                case UNCHANGED:
+                    System.out.println(filename + " - Unchanged");
+                    break;
             }
-        }
-
-        for (String fileName : previousSnapshot.keySet()) {
-            if (!currentSnapshot.containsKey(fileName)) {
-                System.out.println(fileName + " - Deleted");
-            }
-        }
+        });
     }
 
     public SnapshotSys getSnapshotSys() {
