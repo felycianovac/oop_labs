@@ -7,3 +7,4 @@
 2023-10-09 12:59:38 - Student created: Dima Lalala and assigned to Veterinary
 2023-10-09 13:47:50 - Student created: Ion Doe and assigned to Veterinary
 2023-10-09 15:02:29 - Student graduated: Dima Lalala
+
