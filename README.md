@@ -11,3 +11,4 @@
 ## Table of Contents
 - [Lab Assigment 0](src/lab_0/README.md)
 - [Lab Assignment 1](src/lab_1/README.md)
+- [Lab Assignment 2](src/lab_2/README.md)
