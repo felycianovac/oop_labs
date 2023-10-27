@@ -1,4 +1,4 @@
-package lab_2;
+package lab_2.behavior;
 
 import lab_2.files.Document;
 import lab_2.utils.FileUtils;
@@ -14,16 +14,16 @@ public class AppLoop {
     private Repository repository;
     private String directoryPath;
     private Scanner scanner;
-    private DetectorScheduler fileChangeDetector;
+    private DetectorScheduler detectorScheduler;
 
     public AppLoop(String directoryPath, Repository repository) {
-        this.fileChangeDetector = new DetectorScheduler(repository);
+        this.detectorScheduler = new DetectorScheduler(repository);
         this.directoryPath = directoryPath;
         this.scanner = new Scanner(System.in);
         FileUtils directoryAnalyzer = new FileUtils(directoryPath);
         documents = directoryAnalyzer.extractDirectoryFiles();
         this.repository = repository;
-        fileChangeDetector.start();
+        detectorScheduler.start();
     }
 
     public void run() {
@@ -66,7 +66,7 @@ public class AppLoop {
 
 
     private void quitProgram() {
-        fileChangeDetector.stop();
+        detectorScheduler.stop();
         System.out.println("Exiting the program. Goodbye!");
         System.exit(0);
     }

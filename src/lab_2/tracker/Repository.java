@@ -14,14 +14,14 @@ public class Repository {
     private List<Document> documents;
     private String directoryPath;
     private FileUtils directoryAnalyzer;
-    private DetectorScheduler fileChangeDetector;
+    private DetectorScheduler detectorScheduler;
 
 
     public Repository(String directoryPath, List<Document> documents, SnapshotSys snapshotSys){
         this.documents = documents;
         this.snapshotSys = snapshotSys;
         this.directoryAnalyzer = new FileUtils(directoryPath);
-        this.fileChangeDetector = new DetectorScheduler(this);
+        this.detectorScheduler = new DetectorScheduler(this);
     }
 
     public void info(String filename) {

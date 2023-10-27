@@ -1,5 +1,6 @@
 package lab_2;
 
+import lab_2.behavior.AppLoop;
 import lab_2.files.Document;
 import lab_2.tracker.Repository;
 import lab_2.tracker.SnapshotSys;
