@@ -6,3 +6,6 @@ class Person:
     def say_hello(self):
         print(f"Hello, my name is {self.name} and I am {self.age} years old.")
 
+    def say_something():
+    printf("Hello, I am a person")
+
