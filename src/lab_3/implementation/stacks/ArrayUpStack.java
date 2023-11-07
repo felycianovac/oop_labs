@@ -1,4 +1,4 @@
-package lab_3.stacks;
+package lab_3.implementation.stacks;
 
 
 public class ArrayUpStack<E> implements Stack<E> {
@@ -47,7 +47,7 @@ public class ArrayUpStack<E> implements Stack<E> {
 
     @Override
     public int size() {
-        return arr.length;
+        return top+1;
     }
 
     @Override

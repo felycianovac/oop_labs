@@ -43,7 +43,7 @@ public class ArrayDownQueue<E> implements Queue<E> {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        return queue[(front+1)%CAPACITY];
+        return queue[CAPACITY-size()-1];
     }
 
     @Override

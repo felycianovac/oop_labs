@@ -1,4 +1,4 @@
-package lab_3.stacks;
+package lab_3.implementation.stacks;
 
 public interface Stack<E> {
     void push(E e);

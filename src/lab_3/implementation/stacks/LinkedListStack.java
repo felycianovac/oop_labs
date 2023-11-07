@@ -1,6 +1,6 @@
-package lab_3.stacks;
+package lab_3.implementation.stacks;
 
-import lab_3.common.Node;
+import lab_3.implementation.common.Node;
 
 public class LinkedListStack<E> implements Stack<E> {
     private Node<E> top;

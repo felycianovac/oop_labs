@@ -1,4 +1,4 @@
-package lab_3.common;
+package lab_3.implementation.common;
 
 public class Node<E> {
     private E element;

@@ -13,12 +13,14 @@ public class StackTest {
 
         System.out.println("Stack full: " + stack.isFull());
         System.out.println("Stack size: " + stack.size());
+        stack.pop();
         System.out.println("Stack peek: " + stack.peek());
+        System.out.println("Stack size: " + stack.size());
 
         stack.push(5);
-
-        System.out.println("Stack top:" + stack.peek());
+        System.out.println("Stack top after push 5:" + stack.peek());
         System.out.println("Stack full: " + stack.isFull());
+        System.out.println("Stack empty:" + stack.isEmpty());
 
 
     }

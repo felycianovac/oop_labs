@@ -1,4 +1,4 @@
-package lab_3.stacks;
+package lab_3.implementation.stacks;
 
 public class ArrayDownStack<E> implements Stack<E> {
     private E[] arr;
@@ -35,7 +35,7 @@ public class ArrayDownStack<E> implements Stack<E> {
         if (isEmpty()) {
             throw new IllegalStateException("Stack is empty");
         }
-        return arr[bottom];
+        return arr[CAPACITY-1];
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ArrayDownStack<E> implements Stack<E> {
 
     @Override
     public int size() {
-        return arr.length;
+        return CAPACITY-bottom;
     }
 
     @Override
