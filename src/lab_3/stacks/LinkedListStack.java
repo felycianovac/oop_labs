@@ -1,6 +1,10 @@
 package lab_3.stacks;
+
+import lab_3.common.Node;
+
 public class LinkedListStack<E> implements Stack<E> {
     private Node<E> top;
+    private int size;
     private final int CAPACITY = 5;
 
     public LinkedListStack() {
@@ -13,8 +17,9 @@ public class LinkedListStack<E> implements Stack<E> {
             throw new IllegalStateException("Stack is full.");
         }
         Node<E> newNode = new Node<>(element);
-        newNode.next = top;
+        newNode.setNext(top);
         top = newNode;
+        size++;
     }
 
     @Override
@@ -22,8 +27,9 @@ public class LinkedListStack<E> implements Stack<E> {
         if(isEmpty()){
             throw new IllegalStateException("Stack is empty");
         }
-        E element = top.element;
-        top = top.next;
+        E element = top.getElement();
+        top = top.getNext();
+        size--;
         return element;
     }
 
@@ -32,7 +38,7 @@ public class LinkedListStack<E> implements Stack<E> {
         if (isEmpty()) {
             throw new IllegalStateException("Stack is empty");
         }
-        return top.element;
+        return top.getElement();
     }
 
     @Override
@@ -42,13 +48,7 @@ public class LinkedListStack<E> implements Stack<E> {
 
     @Override
     public int size() {
-        int count = 0;
-        Node<E> current = top;
-        while(current != null){
-            count++;
-            current = current.next;
-        }
-        return count;
+        return size;
     }
 
     @Override
