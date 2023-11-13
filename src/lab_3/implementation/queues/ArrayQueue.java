@@ -1,18 +1,18 @@
 package lab_3.implementation.queues;
 
-public class ArrayUpQueue<E> implements Queue<E>{
-    private E[] queue;
+import static lab_3.implementation.common.Constants.CAPACITY;
+
+public class ArrayQueue<E> implements Queue<E>{
+    private E[] arr;
     private int front;
     private int rear;
     private int size;
-    private final int CAPACITY = 5;
 
     @SuppressWarnings("unchecked")
-    public ArrayUpQueue(){
-        queue = (E[]) new Object[CAPACITY];
-        front = 0;
-        rear = -1;
-        size = 0;
+    public ArrayQueue(){
+        arr = (E[]) new Object[CAPACITY];
+        front = this.size = 0;
+        rear = - 1;
     }
 
     @Override
@@ -20,8 +20,8 @@ public class ArrayUpQueue<E> implements Queue<E>{
         if(isFull()){
             throw new IllegalStateException("Queue is full.");
         } else {
-            rear = (rear + 1) % queue.length;
-            queue[rear] = element;
+            rear = (rear + 1) % arr.length;
+            arr[rear] = element;
             size++;
         }
     }
@@ -31,19 +31,18 @@ public class ArrayUpQueue<E> implements Queue<E>{
         if(isEmpty()){
             throw new IllegalStateException("Queue is empty");
         }
-        E element = queue[front];
-        queue[front] = null;
-        front = (front + 1) % queue.length;
+        E element = arr[front];
+        front = (front + 1) % arr.length;
         size--;
         return element;
     }
 
     @Override
-    public E peek() {
+    public E front() {
         if (isEmpty()) {
             throw new IllegalStateException("Queue is empty");
         }
-        return queue[front];
+        return arr[front];
     }
 
     @Override

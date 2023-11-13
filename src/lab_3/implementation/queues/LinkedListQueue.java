@@ -40,7 +40,7 @@ public class LinkedListQueue<E> implements Queue<E>{
     }
 
     @Override
-    public E peek() {
+    public E front() {
         if (isEmpty()) {
             return null;
         }
