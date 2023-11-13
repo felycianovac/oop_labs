@@ -18,11 +18,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         List<Document> documents = new ArrayList<>();
 
-
-
         SnapshotSys snapshotSys = new SnapshotSys(DIRECTORY_PATH,SNAPSHOT_PATH);
         Repository repository = new Repository(DIRECTORY_PATH,documents,snapshotSys);
-
 
         AppLoop appLoop = new AppLoop(DIRECTORY_PATH,repository);
 

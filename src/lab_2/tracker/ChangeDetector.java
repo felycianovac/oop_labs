@@ -8,20 +8,20 @@ import java.util.function.BiConsumer;
 
 public class ChangeDetector {
 
-    public static void compareSnapshots(Map<String, Document> snapshot1, Map<String, Document> snapshot2, BiConsumer<String, ChangeType> action) {
-        for (Map.Entry<String, Document> entry : snapshot2.entrySet()) {
+    public static void compareSnapshots(Map<String, Document> lastKnownSnapshot, Map<String, Document> currentSnapshot, BiConsumer<String, ChangeType> action) {
+        for (Map.Entry<String, Document> entry : currentSnapshot.entrySet()) {
             String filename = entry.getKey();
             Document document = entry.getValue();
-            if (!snapshot1.containsKey(filename)) {
+            if (!lastKnownSnapshot.containsKey(filename)) {
                 action.accept(filename, ChangeType.NEW);
-            } else if (!document.getLastModified().equals(snapshot1.get(filename).getLastModified())) {
+            } else if (!document.getLastModified().equals(lastKnownSnapshot.get(filename).getLastModified())) {
                 action.accept(filename, ChangeType.MODIFIED);
             } else {
                 action.accept(filename, ChangeType.UNCHANGED);
             }
         }
-        for (String fileName : snapshot1.keySet()) {
-            if (!snapshot2.containsKey(fileName)) {
+        for (String fileName : lastKnownSnapshot.keySet()) {
+            if (!currentSnapshot.containsKey(fileName)) {
                 action.accept(fileName, ChangeType.DELETED);
             }
         }

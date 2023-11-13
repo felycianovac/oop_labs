@@ -45,7 +45,7 @@ public class SnapshotSys {
                     .collect(Collectors.toMap(
                             parts -> parts[0],
                             parts -> new Document(directoryPath, parts[0], null, new Date(Long.parseLong(parts[1]))),
-                            (document1, document2) -> document1 // In case of duplicate keys, keep the first one
+                            (document1, document2) -> document1
                     ));
         } catch (IOException e) {
             System.out.println("Failed to load previous snapshot or snapshot doesn't exist");

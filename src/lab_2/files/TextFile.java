@@ -26,6 +26,7 @@ public class TextFile extends Document {
                 String[] wordsInLine = line.split("\\s+");
                 wordCount += wordsInLine.length;
             }
+            reader.close();
         } catch(IOException e) {
             e.printStackTrace();
         }

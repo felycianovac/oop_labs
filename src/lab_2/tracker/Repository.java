@@ -52,7 +52,6 @@ public class Repository {
 
         System.out.println("Last Snapshot Time: " + new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS").format(new Date(lastSnapshotTime)));
 
-        Map<String, Document> lastKnownSnapshot = snapshotSys.getLastKnownSnapshot();
         Map<String, Document> currentSnapshot = snapshotSys.getCurrentSnapshot();
         Map<String, Document> previousSnapshot = snapshotSys.getPreviousSnapshot();
 

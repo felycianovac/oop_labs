@@ -57,6 +57,7 @@ public class ProgramFile extends Document implements Serializable {
                     inCommentBlock = false;
                 }
             }
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
