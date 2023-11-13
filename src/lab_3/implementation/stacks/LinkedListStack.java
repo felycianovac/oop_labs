@@ -2,10 +2,11 @@ package lab_3.implementation.stacks;
 
 import lab_3.implementation.common.Node;
 
+import static lab_3.implementation.common.Constants.CAPACITY;
+
 public class LinkedListStack<E> implements Stack<E> {
     private Node<E> top;
     private int size;
-    private final int CAPACITY = 5;
 
     public LinkedListStack() {
         top = null;
