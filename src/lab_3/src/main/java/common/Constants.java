@@ -1,4 +1,4 @@
-package lab_3.implementation.common;
+package common;
 
 public class Constants {
     public static final int CAPACITY = 5;

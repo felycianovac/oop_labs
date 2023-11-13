@@ -1,4 +1,4 @@
-package lab_3.implementation.queues;
+package queues;
 
 public interface Queue<E> {
     void enqueue(E element);

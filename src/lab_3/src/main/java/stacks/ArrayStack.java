@@ -1,7 +1,7 @@
-package lab_3.implementation.stacks;
+package stacks;
 
 
-import static lab_3.implementation.common.Constants.CAPACITY;
+import static common.Constants.CAPACITY;
 
 @SuppressWarnings("ALL")
 public class ArrayStack<E> implements Stack<E> {

@@ -1,8 +1,9 @@
-package lab_3.implementation.stacks;
+package stacks;
 
-import lab_3.implementation.common.Node;
 
-import static lab_3.implementation.common.Constants.CAPACITY;
+import common.Node;
+
+import static common.Constants.CAPACITY;
 
 public class LinkedListStack<E> implements Stack<E> {
     private Node<E> top;

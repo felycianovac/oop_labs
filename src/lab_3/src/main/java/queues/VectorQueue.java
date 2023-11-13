@@ -1,42 +1,42 @@
-package lab_3.implementation.stacks;
+package queues;
 
 import java.util.Vector;
 
-import static lab_3.implementation.common.Constants.CAPACITY;
+import static common.Constants.CAPACITY;
 
-public class VectorStack<E> implements Stack<E> {
 
+public class VectorQueue<E> implements Queue<E>{
     private Vector<E> vector;
 
 
-    public VectorStack(){
+    public VectorQueue(){
         vector = new Vector<>();
     }
 
     @Override
-    public void push(E element){
+    public void enqueue(E element){
         if(isFull()){
-            throw new IllegalStateException("Stack is full.");
+            throw new IllegalStateException("Queue is full.");
         } else {
             vector.add(element);
         }
     }
 
     @Override
-    public E pop(){
+    public E dequeue(){
         if(isEmpty()){
-            throw new IllegalStateException("Stack is empty.");
+            throw new IllegalStateException("Queue is empty.");
         } else {
-            return vector.remove(vector.size() - 1);
+            return vector.remove(0);
         }
     }
 
     @Override
-    public E peek(){
+    public E front(){
         if(isEmpty()){
-            throw new IllegalStateException("Stack is empty.");
+            throw new IllegalStateException("Queue is empty.");
         } else {
-            return vector.get(vector.size() - 1);
+            return vector.get(0);
         }
     }
 
@@ -54,5 +54,4 @@ public class VectorStack<E> implements Stack<E> {
     public boolean isFull(){
         return vector.size()== CAPACITY;
     }
-
 }

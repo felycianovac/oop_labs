@@ -1,6 +1,6 @@
-package lab_3.implementation.queues;
+package queues;
 
-import static lab_3.implementation.common.Constants.CAPACITY;
+import static common.Constants.CAPACITY;
 
 public class ArrayQueue<E> implements Queue<E>{
     private E[] arr;
